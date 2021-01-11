@@ -53,7 +53,7 @@ public class BankUI extends javax.swing.JFrame {
         tablaBanco.setModel(modelo);
         jScrollPane1.setViewportView(tablaBanco);
 
-        jButton1.setText("Search");
+        jButton1.setText("Buscar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -66,9 +66,9 @@ public class BankUI extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setText("Key");
+        jLabel2.setText("Llave");
 
-        jLabel3.setText("Key = FN + LN (Sin espacios)");
+        jLabel3.setText("Llave = PNOM + AP (Sin espacios)");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
