@@ -49,7 +49,7 @@ public class BankUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Proyecto Banco");
-
+        tablaBanco.setEnabled(false);
         tablaBanco.setModel(modelo);
         jScrollPane1.setViewportView(tablaBanco);
 
@@ -191,13 +191,13 @@ public class BankUI extends javax.swing.JFrame {
         tablaBanco.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         tablaBanco.doLayout();
 		
-		
 	//obtener nombres
 	String nombres[] = control.getHeader();
 	modelo.addColumn(nombres[0]);
         modelo.addColumn(nombres[1]);
         modelo.addColumn(nombres[2]);
-	
+        modelo.addColumn(nombres[3]);
+
         //Funcion que retornara la matriz de strings para actualizar la matriz
         int numFilas = lista.length;
         int numcolumnas = 0;
@@ -212,9 +212,9 @@ public class BankUI extends javax.swing.JFrame {
 		
         //Funcion Para agragar cuentas a las columnas de acuerdo a cuantas columnas se necesitaran
         
-        int totalColumnas = numcolumnas - 3;//Num de columnas que faltan por nombrar
+        int totalColumnas = numcolumnas - 4;//Num de columnas que faltan por nombrar
         for(int j = 1; j<=totalColumnas; j++){
-            modelo.addColumn(nombres[3]);
+            modelo.addColumn(nombres[4]);
         }
         //funcion para establecer el num de filas que abra en la tabla
         modelo.setNumRows(numFilas);

@@ -39,7 +39,7 @@ public class BankTextController {
     }
     
     public String[] getHeader(){
-        String[] header = {"ID","First Name","Last Name","Accounts"};
+        String[] header = {"ID","Primer Nombre","Apellido","Cuentas", "Montos"};
         return header;
     }
     
@@ -51,11 +51,12 @@ public class BankTextController {
         int j;
         BankTextReader bankBuilder = new BankTextReader();
         Hashtable<String,String> input = bankBuilder.bankHashReader("Bank.txt");
-        String[][] output = { {" "," "," "," "}};
+        String[][] output = { {" "," "," "," "," "}};
         //Si existe el elemento
         if(input.containsKey(key)){
             String line;
             String accounts;
+            String ammounts;
             String[] split;
             //Recibe la linea del .txt correspondiente
             line = input.get(key);
@@ -72,11 +73,25 @@ public class BankTextController {
                 j = j + 2;
             }
             output[0][3] = accounts;
+
+            //acomoda todos los montos en un solo elemento de la matriz
+            addAmmount(output, split);
         }
         //Si el elemento no existe, se devuelve null
         else{
             output = null;
         }
         return output;
+    }
+
+    private void addAmmount(String[][] output, String[] split) {
+        String ammounts;
+        int j;
+        ammounts = split[4];
+        for(j=7;j<split.length;j++){
+            ammounts = ammounts + ", " + split[j];
+            j = j + 2;
+        }
+        output[0][4] = ammounts;
     }
 }
