@@ -1,4 +1,4 @@
-package bank.model;
+package bank.controller;
 
 import java.io.FileReader;
 import java.util.ArrayList;

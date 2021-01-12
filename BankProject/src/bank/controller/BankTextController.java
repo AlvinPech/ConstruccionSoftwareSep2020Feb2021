@@ -6,7 +6,6 @@
 package bank.controller;
 
 import java.util.ArrayList;
-import bank.model.BankTextReader;
 import java.util.Hashtable;
 
 
@@ -37,13 +36,9 @@ public class BankTextController {
         }
         return output;
     }
-    //se creo el monto--
+    
     public String[] getHeader(){
-
-        String[] header = {"ID","Nombre","Apellido","Cuenta","Monto"};
-/*=======
         String[] header = {"ID","Primer Nombre","Apellido","Cuentas", "Montos"};
->>>>>>> 566a600b5ced2f7169ec7d63d296bcee79a91d75*/
         return header;
     }
     
@@ -53,14 +48,10 @@ public class BankTextController {
     public String[][] getHashTable(String key)
     {
         int j;
+
         BankTextReader bankBuilder = new BankTextReader();
         Hashtable<String,String> input = bankBuilder.bankHashReader("Bank.txt");
-
-        //se creo un espacio mas--
-        String[][] output = new String[3][5];
-
-       // String[][] output = { {" "," "," "," "," "}};
-
+        String[][] output = { {" "," "," "," "," "}};
         //Si existe el elemento
         if(input.containsKey(key)){
             String line;
@@ -69,51 +60,30 @@ public class BankTextController {
             String[] split;
             //Recibe la linea del .txt correspondiente
             line = input.get(key);
-
             //y lo divide en los elementos necesarios para mostrarlo en una tabla
             split = line.split(",");
             //colocandolos en la matriz output
-
-           for(int i = 0; i < 3; i ++){
-               for ( j = 0; j < 3; j++) {
-                   output[i][j] = split[j];
-               }
-           }
-
-            output[0][3] = split[5];
-            output[1][3] = split[8];
-            output[2][3] = split[11];
-
-            output[0][4] = split[4];
-            output[1][4] = split[7];
-            output[2][4] = split[10];
-
-
-        }
+            for(j=0;j<3;j++){
+                output[0][j] = split[j];
+            }
             //acomoda todos los IDAccount en un solo elemento de la matriz
-            /*
-            accounts = split[4];
+            accounts = split[3];
             for(j=6;j<split.length;j++){
                 accounts = accounts + ", " + split[j];
                 j = j + 2;
             }
-<<<<<<< HEAD
-            output[0][3] = accounts;*/
-
-/*=======
             output[0][3] = accounts;
 
             //acomoda todos los montos en un solo elemento de la matriz
             addAmmount(output, split);
         }
->>>>>>> 566a600b5ced2f7169ec7d63d296bcee79a91d75*/
         //Si el elemento no existe, se devuelve null
         else{
             output = null;
         }
         return output;
     }
-/*
+
     private void addAmmount(String[][] output, String[] split) {
         String ammounts;
         int j;
@@ -123,5 +93,5 @@ public class BankTextController {
             j = j + 2;
         }
         output[0][4] = ammounts;
-    }*/
+    }
 }

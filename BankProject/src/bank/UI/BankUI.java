@@ -231,55 +231,41 @@ public class BankUI extends javax.swing.JFrame {
         tablaBanco.doLayout();
 		
 	//obtener nombres
-        //obtener nombres
-        String nombres[] = control.getHeader();
-        modelo.addColumn(nombres[0]);
+	String nombres[] = control.getHeader();
+	modelo.addColumn(nombres[0]);
         modelo.addColumn(nombres[1]);
         modelo.addColumn(nombres[2]);
-
-        //se agregaron nuevas columnas
         modelo.addColumn(nombres[3]);
-        modelo.addColumn(nombres[4]);
-
-      //  modelo.addColumn(nombres[3]);
-
 
         //Funcion que retornara la matriz de strings para actualizar la matriz
         int numFilas = lista.length;
         int numcolumnas = 0;
         int valor;
-        for (int i = 0; i < numFilas; i++) {
+        for(int i = 0; i<numFilas; i++){
             valor = lista[i].length;
-            if (valor > numcolumnas) {
+            if(valor > numcolumnas){
                 numcolumnas = valor;
             }
         }
-
+		
+		
         //Funcion Para agragar cuentas a las columnas de acuerdo a cuantas columnas se necesitaran
-
-        int totalColumnas = numcolumnas - 5;//Num de columnas
-        for (int j = 1; j <= totalColumnas; j++) {
-            modelo.addColumn(nombres[3]);
-            /*
-=======
         
         int totalColumnas = numcolumnas - 4;//Num de columnas que faltan por nombrar
         for(int j = 1; j<=totalColumnas; j++){
             modelo.addColumn(nombres[4]);
->>>>>>> 566a600b5ced2f7169ec7d63d296bcee79a91d75*/
         }
-
         //funcion para establecer el num de filas que abra en la tabla
         modelo.setNumRows(numFilas);
         //funcion para introducir los valores a la tabla
         numcolumnas = 0;
-        for (int i = 0; i < numFilas; i++) {
+        for(int i = 0; i<numFilas; i++){
             numcolumnas = lista[i].length;
-            for (int j = 0; j < numcolumnas; j++) {
+            for(int j = 0; j<numcolumnas; j++){
                 modelo.setValueAt(lista[i][j], i, j);
             }
         }
-
+        
     }
 
 
