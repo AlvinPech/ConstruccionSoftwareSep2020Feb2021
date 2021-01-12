@@ -8,7 +8,12 @@ package bank.UI;
 import bank.controller.BankTextController;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import java.lang.Object;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionEvent;
+
 
 /**
  *
@@ -49,11 +54,11 @@ public class BankUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Proyecto Banco");
-
+        tablaBanco.setEnabled(false);
         tablaBanco.setModel(modelo);
         jScrollPane1.setViewportView(tablaBanco);
 
-        jButton1.setText("Search");
+        jButton1.setText("Buscar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -66,9 +71,9 @@ public class BankUI extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setText("Key");
+        jLabel2.setText("Llave");
 
-        jLabel3.setText("Key = FN + LN (Sin espacios)");
+        jLabel3.setText("Llave = PNOM _ AP");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -161,21 +166,55 @@ public class BankUI extends javax.swing.JFrame {
 
     //Metodo que corre al presionar el boton. Busca un elemento en un Hashtable,
     //y lo coloca en una tabla
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButton1ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         String key;
         key = jTextField1.getText();
-        BankTextController control = new BankTextController(); 
-        //Llama a la funcion de controller que busca el elemento en el HashTable
-        String[][] table = control.getHashTable(key);
-        //Si el elemento existe, lo coloca en la tabla
-        if(table!=null){
-            cargarModeloTabla(table);
+        int index = 0;
+        char[] arrayChar = key.toCharArray();
+        int contador = 0;
+        for(int i=0; i<arrayChar.length; i++)
+            if( arrayChar[i] == '_')
+                contador++;
+        System.out.println(contador);
+
+        Pattern pat = Pattern.compile("^_.*");
+        Matcher mat = pat.matcher(key);
+        if (mat.matches()) {
+            index--;
+        } else {
+            index++;
         }
-        //Si el elemento no existe, crea una ventana mostrando que el elemento no existe
-        else{
-            JOptionPane.showMessageDialog(this, "Key not found", "Error", JOptionPane.WARNING_MESSAGE);
-        }
+        if (contador == 1 && index== 1) {
+            String key2 = key.replace("_", "");
+            System.out.println(key2);
+            BankTextController control = new BankTextController();
+            //Llama a la funcion de controller que busca el elemento en el HashTable
+            String[][] table = control.getHashTable(key2);
+            //Si el elemento existe, lo coloca en la tabla
+            if (table != null) {
+                cargarModeloTabla(table);
+            }
+        }else{
+            if (contador < 1) {
+
+                JOptionPane.showMessageDialog(this, "Necesita separar los nombres con guión bajo", "Error", JOptionPane.WARNING_MESSAGE);
+
+        }else{
+                    JOptionPane.showMessageDialog(this, "Key not found", "Error", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+
+
+
+
+
+
+
+
+
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     //Este metodo carga el modewlo la tabla
@@ -191,16 +230,19 @@ public class BankUI extends javax.swing.JFrame {
         tablaBanco.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         tablaBanco.doLayout();
 		
-		
 	//obtener nombres
         //obtener nombres
         String nombres[] = control.getHeader();
         modelo.addColumn(nombres[0]);
         modelo.addColumn(nombres[1]);
         modelo.addColumn(nombres[2]);
+
         //se agregaron nuevas columnas
         modelo.addColumn(nombres[3]);
         modelo.addColumn(nombres[4]);
+
+      //  modelo.addColumn(nombres[3]);
+
 
         //Funcion que retornara la matriz de strings para actualizar la matriz
         int numFilas = lista.length;
@@ -214,9 +256,17 @@ public class BankUI extends javax.swing.JFrame {
         }
 
         //Funcion Para agragar cuentas a las columnas de acuerdo a cuantas columnas se necesitaran
+
         int totalColumnas = numcolumnas - 5;//Num de columnas
         for (int j = 1; j <= totalColumnas; j++) {
             modelo.addColumn(nombres[3]);
+            /*
+=======
+        
+        int totalColumnas = numcolumnas - 4;//Num de columnas que faltan por nombrar
+        for(int j = 1; j<=totalColumnas; j++){
+            modelo.addColumn(nombres[4]);
+>>>>>>> 566a600b5ced2f7169ec7d63d296bcee79a91d75*/
         }
 
         //funcion para establecer el num de filas que abra en la tabla

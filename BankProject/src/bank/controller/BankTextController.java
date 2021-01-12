@@ -39,7 +39,11 @@ public class BankTextController {
     }
     //se creo el monto--
     public String[] getHeader(){
-        String[] header = {"ID","First Name","Last Name","Accounts","monto"};
+
+        String[] header = {"ID","Nombre","Apellido","Cuenta","Monto"};
+/*=======
+        String[] header = {"ID","Primer Nombre","Apellido","Cuentas", "Montos"};
+>>>>>>> 566a600b5ced2f7169ec7d63d296bcee79a91d75*/
         return header;
     }
     
@@ -51,12 +55,17 @@ public class BankTextController {
         int j;
         BankTextReader bankBuilder = new BankTextReader();
         Hashtable<String,String> input = bankBuilder.bankHashReader("Bank.txt");
+
         //se creo un espacio mas--
         String[][] output = new String[3][5];
+
+       // String[][] output = { {" "," "," "," "," "}};
+
         //Si existe el elemento
         if(input.containsKey(key)){
             String line;
             String accounts;
+            String ammounts;
             String[] split;
             //Recibe la linea del .txt correspondiente
             line = input.get(key);
@@ -88,12 +97,31 @@ public class BankTextController {
                 accounts = accounts + ", " + split[j];
                 j = j + 2;
             }
+<<<<<<< HEAD
             output[0][3] = accounts;*/
 
+/*=======
+            output[0][3] = accounts;
+
+            //acomoda todos los montos en un solo elemento de la matriz
+            addAmmount(output, split);
+        }
+>>>>>>> 566a600b5ced2f7169ec7d63d296bcee79a91d75*/
         //Si el elemento no existe, se devuelve null
         else{
             output = null;
         }
         return output;
     }
+/*
+    private void addAmmount(String[][] output, String[] split) {
+        String ammounts;
+        int j;
+        ammounts = split[4];
+        for(j=7;j<split.length;j++){
+            ammounts = ammounts + ", " + split[j];
+            j = j + 2;
+        }
+        output[0][4] = ammounts;
+    }*/
 }
