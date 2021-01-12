@@ -8,7 +8,12 @@ package bank.UI;
 import bank.controller.BankTextController;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import java.lang.Object;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionEvent;
+
 
 /**
  *
@@ -68,7 +73,7 @@ public class BankUI extends javax.swing.JFrame {
 
         jLabel2.setText("Key");
 
-        jLabel3.setText("Key = FN + LN (Sin espacios)");
+        jLabel3.setText("Key = FN _ LN (Sin espacios)");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -161,21 +166,56 @@ public class BankUI extends javax.swing.JFrame {
 
     //Metodo que corre al presionar el boton. Busca un elemento en un Hashtable,
     //y lo coloca en una tabla
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButton1ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         String key;
         key = jTextField1.getText();
-        BankTextController control = new BankTextController(); 
-        //Llama a la funcion de controller que busca el elemento en el HashTable
-        String[][] table = control.getHashTable(key);
-        //Si el elemento existe, lo coloca en la tabla
-        if(table!=null){
-            cargarModeloTabla(table);
+
+        int index = 0;
+        char[] arrayChar = key.toCharArray();
+        int contador = 0;
+        for(int i=0; i<arrayChar.length; i++)
+            if( arrayChar[i] == '_')
+                contador++;
+        System.out.println(contador);
+
+        Pattern pat = Pattern.compile("^_.*");
+        Matcher mat = pat.matcher(key);
+        if (mat.matches()) {
+            index--;
+        } else {
+            index++;
         }
-        //Si el elemento no existe, crea una ventana mostrando que el elemento no existe
-        else{
-            JOptionPane.showMessageDialog(this, "Key not found", "Error", JOptionPane.WARNING_MESSAGE);
-        }
+        if (contador == 1 && index== 1) {
+            String key2 = key.replace("_", "");
+            System.out.println(key2);
+            BankTextController control = new BankTextController();
+            //Llama a la funcion de controller que busca el elemento en el HashTable
+            String[][] table = control.getHashTable(key2);
+            //Si el elemento existe, lo coloca en la tabla
+            if (table != null) {
+                cargarModeloTabla(table);
+            }
+        }else{
+            if (contador < 1) {
+
+                JOptionPane.showMessageDialog(this, "Necesita separar los nombres con guión bajo", "Error", JOptionPane.WARNING_MESSAGE);
+
+        }else{
+                    JOptionPane.showMessageDialog(this, "Key not found", "Error", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+
+
+
+
+
+
+
+
+
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     //Este metodo carga el modewlo la tabla
