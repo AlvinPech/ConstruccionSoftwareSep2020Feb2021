@@ -174,7 +174,7 @@ public class BankUI extends javax.swing.JFrame {
         }
         //Si el elemento no existe, crea una ventana mostrando que el elemento no existe
         else{
-            JOptionPane.showMessageDialog(this, "Key not found", "Error", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Llave no encontrada", "Error", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
